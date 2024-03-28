@@ -1,18 +1,17 @@
-// Import the express module
 const express = require('express');
+const bodyParser = require('body-parser');
 
-const Config = require('./config');
+const db = require('./config/db');
+const config = require('./config/index');
+
+const baseRoute = require('./routes/index');
 
 const app = express();
 
-// Define a route for the root URL
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+app.use(bodyParser.json());
 
+// Use routes
+app.use('/', baseRoute);
 
-// Set up the server to listen on port 3000
-const port = Config.PORT;
-app.listen(port, () => {
-  console.log(`Server is running onnnnn http://localhost:${port}`);
-});
+const PORT = config.PORT;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
